@@ -1,0 +1,132 @@
+
+<form [formGroup]="userForm">
+  <mat-dialog-content>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>ID</mat-label>
+          <input [disabled]="true" matInput placeholder="Enter product id" formControlName="id" type="number">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Product Name</mat-label>
+          <input matInput placeholder="Enter product name" formControlName="productName">
+          @if (f.productName.hasError('required')) {
+              <mat-error>Product Name is required.</mat-error>
+          }
+          @if (f.productName.hasError('minlength')) {
+          <mat-error>Minimum 3 characters required.</mat-error>
+          }
+
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Product code</mat-label>
+          <input matInput placeholder="Enter product code" formControlName="productCode">
+          @if (f.productCode.hasError('required')) {
+              <mat-error>Product Name is required.</mat-error>
+          }
+          @if (f.productCode.hasError('minlength')) {
+          <mat-error>Minimum 3 characters required.</mat-error>
+          }
+
+          @if (f.productCode.hasError('exists')) {
+          <mat-error>This  already exists in the database.</mat-error>
+          }
+
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Select Category</mat-label>
+          <mat-select formControlName="category">
+            <mat-option value="">All</mat-option>
+            <mat-option value="Electronics">Electronics</mat-option>
+            <mat-option value="Furniture">Furniture</mat-option>
+            <mat-option value="Apparel">Apparel</mat-option>
+          </mat-select>
+
+           @if (f.category.hasError('required')) {
+              <mat-error>Category Name is required.</mat-error>
+          }
+          
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Price</mat-label>
+          <input matInput placeholder="Enter product price" formControlName="price" type="number">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Stock Quantity</mat-label>
+          <input matInput placeholder="Enter stock quantity" formControlName="stockQuantity" type="number">
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="releaseDate">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 d-flex align-items-center gap-4 pb-3">
+        <mat-checkbox formControlName="availableForDelivery">Available For Delivery</mat-checkbox>
+        <mat-slide-toggle formControlName="isActive">Active</mat-slide-toggle>
+      </div>
+
+       <div class="col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Select Country</mat-label>
+          <mat-select (selectionChange)="selectCountry($event.value)" formControlName="country">
+            @for (item of countryList(); track $index) {
+              <mat-option [value]="item.id">{{item.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      
+       <div class="col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Select State</mat-label>
+          <mat-select (selectionChange)="selectState($event.value)"  formControlName="state">
+            @for (item of stateList(); track $index) {
+              <mat-option [value]="item.id">{{item.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      
+       <div class="col-md-6">
+        <mat-form-field class="w-100">
+          <mat-label>Select City</mat-label>
+          <mat-select  formControlName="city">
+            @for (item of cityList(); track $index) {
+              <mat-option [value]="item.id">{{item.name}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+    </div> 
+    </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onNoClick()">Close</button>
+    <button mat-raised-button color="primary" type="button" (click)="saveClick()" cdkFocusInitial>Save</button>
+  </mat-dialog-actions>
+</form>

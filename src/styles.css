@@ -1,0 +1,10 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+/* You can add global styles to this file, and also import other style files */.error-message {
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
